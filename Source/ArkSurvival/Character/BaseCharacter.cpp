@@ -1,25 +1,33 @@
 #include "BaseCharacter.h"
 
+#include "ArkSurvival/ArkSurvival.h"
+#include "ArkSurvival/Data/Character/CharacterDataAsset.h"
+#include "Net/UnrealNetwork.h"
+
 ABaseCharacter::ABaseCharacter()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 }
 
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	InitializeFromDataAsset();
 }
 
-void ABaseCharacter::Tick(float DeltaTime)
+#pragma region Data
+void ABaseCharacter::InitializeFromDataAsset()
 {
-	Super::Tick(DeltaTime);
-
+	ARK_VALIDATE(CharacterDataAsset);
+	CurrentHealth = CharacterDataAsset->MaxHealth;
 }
+#pragma endregion
 
-void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+
+#pragma region Multi
+void ABaseCharacter::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ABaseCharacter, CurrentHealth);
 }
-
+#pragma endregion

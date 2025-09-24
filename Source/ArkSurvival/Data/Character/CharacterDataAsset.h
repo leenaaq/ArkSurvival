@@ -7,18 +7,18 @@
 UCLASS()
 class ARKSURVIVAL_API UCharacterDataAsset : public UDataAsset
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-	UPROPERTY()
-	USkeletalMeshComponent* SkeletalMesh;
+public:
+    UPROPERTY(EditAnywhere)
+    USkeletalMesh* SkeletalMesh = nullptr;
 
-	UPROPERTY()
-	TSubclassOf<UAnimInstance> AnimBP;
+    UPROPERTY(EditAnywhere)
+    TSubclassOf<UAnimInstance> AnimBP = nullptr;
 
-	//Stats
-	UPROPERTY()
-	float MaxHealth = 0.f;
+    UPROPERTY(EditAnywhere)
+    float MaxHealth = 0.f;
 
-	UPROPERTY()
-	float MovementSpeed = 0.f;
+    UPROPERTY(EditAnywhere)
+    float MovementSpeed = 0.f;
 };
