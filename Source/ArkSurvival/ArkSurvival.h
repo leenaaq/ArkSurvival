@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogCharacter, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogItem, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogInventory, Log, All);
 
 #define ARK_VALIDATE(Expression) \
 if (!(Expression)) { \

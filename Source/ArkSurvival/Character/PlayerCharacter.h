@@ -10,6 +10,7 @@
 class USpringArmComponent;
 class UCameraComponent;
 class UInputComponent;
+class UPlayerInventoryComponent;
 
 UCLASS()
 class ARKSURVIVAL_API APlayerCharacter : public ABaseCharacter
@@ -47,5 +48,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UCameraComponent* CameraComp = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	UPlayerInventoryComponent* PlayerInventoryComp = nullptr;
+	
 #pragma endregion
 };

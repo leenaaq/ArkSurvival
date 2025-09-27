@@ -1,13 +1,16 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "5.5",
+	"EngineAssociation": "{EF53B53E-4548-1F5B-CC91-7390BAF66330}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
 		{
 			"Name": "ArkSurvival",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	],
 	"Plugins": [

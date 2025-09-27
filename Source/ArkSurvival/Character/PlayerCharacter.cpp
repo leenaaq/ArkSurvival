@@ -1,4 +1,5 @@
 #include "PlayerCharacter.h"
+#include "ArkSurvival/Components/Inventory/PlayerInventoryComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -9,6 +10,8 @@ APlayerCharacter::APlayerCharacter()
 	
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(SpringArmComp);
+
+	PlayerInventoryComp = CreateDefaultSubobject<UPlayerInventoryComponent>(TEXT("PlayerInventoryComp"));
 }
 
 void APlayerCharacter::BeginPlay()

@@ -16,28 +16,28 @@ enum class EItemCategory : uint8
 };
 
 USTRUCT(BlueprintType)
-struct ARKSURVIVAL_API FBaseItemData
+struct ARKSURVIVAL_API FBaseItemData : public FTableRowBase
 {
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 ItemID = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "이름"))
+	FString ItemName;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString ItemName = TEXT("");
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "카테고리"))
+	EItemCategory ItemCategory;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EItemCategory ItemCategory = EItemCategory::None;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "최대 스택 수"))
+	int32 MaxStackSize;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString IconPath = TEXT("");
-    
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "무게"))
+	float Weight;
+
 	FBaseItemData()
 	{
-		ItemID = 0;
 		ItemName = TEXT("");
 		ItemCategory = EItemCategory::None;
-		IconPath = TEXT("");
+		MaxStackSize = 0;
+		Weight = 0.f;
 	}
 };
