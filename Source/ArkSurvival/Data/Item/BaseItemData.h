@@ -24,6 +24,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "이름"))
 	FString ItemName;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "아이콘"))
+	TSoftObjectPtr<UTexture2D> Icon;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "카테고리"))
 	EItemCategory ItemCategory;
 
@@ -36,6 +39,7 @@ public:
 	FBaseItemData()
 	{
 		ItemName = TEXT("");
+		Icon = nullptr;
 		ItemCategory = EItemCategory::None;
 		MaxStackSize = 0;
 		Weight = 0.f;
