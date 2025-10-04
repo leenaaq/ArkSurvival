@@ -35,7 +35,4 @@ public:
 
 	FConsumeItemData GetConsumableData(int32 ItemID) const;
 	FEquipmentItemData GetEquipmentData(int32 ItemID) const;
-
-	bool IsValidConsumableID(int32 ItemID) const;
-	bool IsValidEquipmentID(int32 ItemID) const;
 };

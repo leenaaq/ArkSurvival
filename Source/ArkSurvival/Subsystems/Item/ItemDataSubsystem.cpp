@@ -66,13 +66,3 @@ FEquipmentItemData UItemDataSubsystem::GetEquipmentData(int32 ItemID) const
 	}
 	return FEquipmentItemData();
 }
-
-bool UItemDataSubsystem::IsValidConsumableID(int32 ItemID) const
-{
-	return ConsumableDataMap.Contains(ItemID);
-}
-
-bool UItemDataSubsystem::IsValidEquipmentID(int32 ItemID) const
-{
-	return EquipmentDataMap.Contains(ItemID);
-}
