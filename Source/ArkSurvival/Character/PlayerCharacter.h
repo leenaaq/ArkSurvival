@@ -5,8 +5,10 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "../UI/Inventory/PlayerInventoryWidget.h"
 #include "PlayerCharacter.generated.h"
 
+class UPlayerInventoryWidget;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputComponent;
@@ -57,4 +59,5 @@ private:
 	UPlayerInventoryComponent* PlayerInventoryComp = nullptr;
 	
 #pragma endregion
+
 };

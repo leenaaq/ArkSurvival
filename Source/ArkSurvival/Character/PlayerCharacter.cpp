@@ -1,5 +1,6 @@
 #include "PlayerCharacter.h"
 #include "ArkSurvival/Components/Inventory/PlayerInventoryComponent.h"
+#include "ArkSurvival/Subsystems/UI/UISubsystem.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -37,7 +38,7 @@ void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Look);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Jump);
-		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Triggered, this, &APlayerCharacter::ToggleInventory);
+		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &APlayerCharacter::ToggleInventory);
 	}
 }
 
@@ -56,7 +57,7 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 }
 
 void APlayerCharacter::ToggleInventory(const FInputActionValue& Value)
-{
-	// UI 토글
+{    
+	GetGameInstance()->GetSubsystem<UUISubsystem>()->ToggleUI("PlayerInventory");
 }
 #pragma endregion
