@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "BaseCharacter.generated.h"
 
+class UInteractableComponent;
 class UCharacterDataAsset;
 
 UCLASS()
@@ -27,6 +28,11 @@ protected:
 private:
 	UPROPERTY(Replicated)
 	float CurrentHealth = 0.f;
+#pragma endregion
+
+#pragma region Components
+	UPROPERTY(EditAnywhere)
+	UInteractableComponent* InteractableComp = nullptr;
 #pragma endregion
 
 #pragma region Multi

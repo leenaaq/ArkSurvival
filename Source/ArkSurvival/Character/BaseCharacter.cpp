@@ -1,12 +1,14 @@
 #include "BaseCharacter.h"
-
 #include "ArkSurvival/ArkSurvival.h"
+#include "ArkSurvival/Components/Interaction/InteractableComponent.h"
 #include "ArkSurvival/Data/Character/CharacterDataAsset.h"
 #include "Net/UnrealNetwork.h"
 
 ABaseCharacter::ABaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	
+	InteractableComp = CreateDefaultSubobject<UInteractableComponent>(TEXT("InteractableComp"));
 }
 
 void ABaseCharacter::BeginPlay()
@@ -23,6 +25,9 @@ void ABaseCharacter::InitializeFromDataAsset()
 }
 #pragma endregion
 
+#pragma region Components
+
+#pragma endregion
 
 #pragma region Multi
 void ABaseCharacter::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const

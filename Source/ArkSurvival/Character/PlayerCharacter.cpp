@@ -1,4 +1,7 @@
 #include "PlayerCharacter.h"
+
+#include "ArkSurvival/Components/Interaction/InteractableComponent.h"
+#include "ArkSurvival/Components/Interaction/InteractionComponent.h"
 #include "ArkSurvival/Components/Inventory/PlayerInventoryComponent.h"
 #include "ArkSurvival/Subsystems/UI/UISubsystem.h"
 #include "Camera/CameraComponent.h"
@@ -13,6 +16,8 @@ APlayerCharacter::APlayerCharacter()
 	CameraComp->SetupAttachment(SpringArmComp);
 
 	PlayerInventoryComp = CreateDefaultSubobject<UPlayerInventoryComponent>(TEXT("PlayerInventoryComp"));
+
+	InteractionComp = CreateDefaultSubobject<UInteractionComponent>(TEXT("InteractionComp"));
 }
 
 void APlayerCharacter::BeginPlay()
@@ -39,6 +44,7 @@ void APlayerCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Look);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Jump);
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &APlayerCharacter::ToggleInventory);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &APlayerCharacter::TryInteract);
 	}
 }
 
@@ -59,5 +65,20 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 void APlayerCharacter::ToggleInventory(const FInputActionValue& Value)
 {    
 	GetGameInstance()->GetSubsystem<UUISubsystem>()->ToggleUI("PlayerInventory");
+}
+
+void APlayerCharacter::TryInteract(const FInputActionValue& Value)
+{
+	if (InteractionComp)
+	{
+		UInteractableComponent* Target = InteractionComp->GetCurrentInteractable();
+		if (Target && GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Green, 
+				FString::Printf(TEXT("대상 %s"), *Target->GetOwner()->GetName()));
+		}
+        
+		InteractionComp->TryInteract();
+	}
 }
 #pragma endregion

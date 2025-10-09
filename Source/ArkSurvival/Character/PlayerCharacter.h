@@ -8,6 +8,7 @@
 #include "../UI/Inventory/PlayerInventoryWidget.h"
 #include "PlayerCharacter.generated.h"
 
+class UInteractionComponent;
 class UPlayerInventoryWidget;
 class USpringArmComponent;
 class UCameraComponent;
@@ -30,6 +31,8 @@ private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void ToggleInventory(const FInputActionValue& Value);
+	void TryInteract(const FInputActionValue& Value);
+	
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
 	class UInputMappingContext* DefaultMappingContext;
@@ -45,6 +48,9 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InventoryAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InteractAction;
 #pragma endregion
 	
 #pragma region Components
@@ -57,6 +63,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UPlayerInventoryComponent* PlayerInventoryComp = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	UInteractionComponent* InteractionComp = nullptr;
 	
 #pragma endregion
 
