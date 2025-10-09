@@ -69,4 +69,16 @@ private:
 	
 #pragma endregion
 
+#pragma region Preview
+public:
+	void CreateCharacterPreview();
+	
+private:
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<AActor> CharacterPreviewClass = nullptr;
+
+	UPROPERTY()
+	AActor* CharacterPreviewActor = nullptr;
+#pragma endregion
+
 };

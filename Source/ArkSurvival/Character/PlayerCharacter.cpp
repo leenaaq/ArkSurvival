@@ -63,7 +63,12 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 }
 
 void APlayerCharacter::ToggleInventory(const FInputActionValue& Value)
-{    
+{
+	if (!CharacterPreviewActor && CharacterPreviewClass)
+	{
+		CreateCharacterPreview();
+	}
+	
 	GetGameInstance()->GetSubsystem<UUISubsystem>()->ToggleUI("PlayerInventory");
 }
 
@@ -80,5 +85,20 @@ void APlayerCharacter::TryInteract(const FInputActionValue& Value)
         
 		InteractionComp->TryInteract();
 	}
+}
+#pragma endregion
+
+#pragma region Preview
+void APlayerCharacter::CreateCharacterPreview()
+{
+	FVector SpawnLocation = FVector(0, 0, +1000000000);
+	//FVector SpawnLocation = FVector(160, 0, 92);
+	FRotator SpawnRotation = FRotator::ZeroRotator;
+    
+	CharacterPreviewActor = GetWorld()->SpawnActor<AActor>(
+		CharacterPreviewClass,
+		SpawnLocation,
+		SpawnRotation
+	);
 }
 #pragma endregion
