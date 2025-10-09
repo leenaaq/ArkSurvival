@@ -45,6 +45,10 @@ bool UBaseInventoryComponent::AddItem(int32 ItemID, int32 Count)
             if (Count <= 0)
             {
                 UpdateCurrentWeight();
+                if (GetOwner()->HasAuthority())
+                {
+                    OnInventoryChanged.Broadcast();
+                }
                 return true;
             }
         }
@@ -67,6 +71,10 @@ bool UBaseInventoryComponent::AddItem(int32 ItemID, int32 Count)
     }
     
     UpdateCurrentWeight();
+    if (GetOwner()->HasAuthority())
+    {
+        OnInventoryChanged.Broadcast();
+    }
     return true;
 }
 
@@ -105,13 +113,17 @@ bool UBaseInventoryComponent::RemoveItem(int32 ItemID, int32 Count)
             
             if (Count <= 0)
             {
-                UpdateCurrentWeight();
-                return true;
+                break;
             }
         }
     }
     
     UpdateCurrentWeight();
+
+    if (GetOwner()->HasAuthority())
+    {
+        OnInventoryChanged.Broadcast();
+    }
     return Count == 0;
 }
 
@@ -184,4 +196,10 @@ FBaseItemData UBaseInventoryComponent::GetItemDataByID(int32 ItemID) const
     }
     
     return FBaseItemData();
+}
+
+void UBaseInventoryComponent::OnRep_Slots()
+{
+    UpdateCurrentWeight();
+    OnInventoryChanged.Broadcast();
 }

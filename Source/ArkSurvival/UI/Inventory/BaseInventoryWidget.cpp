@@ -10,6 +10,23 @@ void UBaseInventoryWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	InitializeSlots();
+
+	if (InventoryComponent)
+	{
+		InventoryComponent->OnInventoryChanged.AddDynamic(this, &UBaseInventoryWidget::RefreshAllSlots);
+	}
+
+	RefreshAllSlots();
+}
+
+void UBaseInventoryWidget::NativeDestruct()
+{
+	if (InventoryComponent)
+	{
+		InventoryComponent->OnInventoryChanged.RemoveDynamic(this, &UBaseInventoryWidget::RefreshAllSlots);
+	}
+    
+	Super::NativeDestruct();
 }
 
 void UBaseInventoryWidget::InitializeSlots()

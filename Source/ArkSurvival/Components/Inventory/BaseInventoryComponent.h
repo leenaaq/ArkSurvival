@@ -27,6 +27,8 @@ struct ARKSURVIVAL_API FInventorySlot
 	}
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInventoryChanged);
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ARKSURVIVAL_API UBaseInventoryComponent : public UActorComponent
 {
@@ -34,24 +36,14 @@ class ARKSURVIVAL_API UBaseInventoryComponent : public UActorComponent
 
 public:
 	UBaseInventoryComponent();
-
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated)
-	TArray<FInventorySlot> Slots;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxSlots = 30;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MaxWeight = 100.0f;
-
-	UPROPERTY(BlueprintReadOnly, Replicated)
-	float CurrentWeight = 0.0f;
-
-public:
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+public:	
+	UFUNCTION()
+	void OnRep_Slots();
 
 	UFUNCTION(BlueprintCallable)
 	bool AddItem(int32 ItemID, int32 Count = 1);
@@ -77,4 +69,21 @@ public:
 private:
 	void UpdateCurrentWeight();
 	FBaseItemData GetItemDataByID(int32 ItemID) const;
+
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnInventoryChanged OnInventoryChanged;
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing=OnRep_Slots)
+    TArray<FInventorySlot> Slots;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 MaxSlots = 30;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxWeight = 100.0f;
+
+	UPROPERTY(BlueprintReadOnly, Replicated)
+	float CurrentWeight = 0.0f;
 };

@@ -17,24 +17,7 @@ public:
 
 protected:
 	virtual void NativeConstruct() override;
-
-	UPROPERTY(meta = (BindWidget))
-	UUniformGridPanel* InventoryGrid;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 SlotsPerRow = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 TotalSlots = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<class UInventorySlotWidget> SlotWidgetClass;
-	
-	UPROPERTY()
-	TArray<UInventorySlotWidget*> SlotWidgets;
-
-	UPROPERTY(BlueprintReadWrite)
-	UBaseInventoryComponent* InventoryComponent;
+	virtual void NativeDestruct() override;
 
 public:
 	UFUNCTION(BlueprintCallable)
@@ -45,4 +28,23 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void RefreshAllSlots();
+
+protected:
+	UPROPERTY(meta = (BindWidget))
+	UUniformGridPanel* InventoryGrid = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 SlotsPerRow = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 TotalSlots = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class UInventorySlotWidget> SlotWidgetClass = nullptr;
+	
+	UPROPERTY()
+	TArray<UInventorySlotWidget*> SlotWidgets = {};
+
+	UPROPERTY(BlueprintReadWrite)
+	UBaseInventoryComponent* InventoryComponent = nullptr;
 };

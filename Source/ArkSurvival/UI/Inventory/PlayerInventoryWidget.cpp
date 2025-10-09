@@ -3,7 +3,7 @@
 
 void UPlayerInventoryWidget::NativeConstruct()
 {
-	Super::NativeConstruct();
 	InventoryComponent = Cast<UPlayerInventoryComponent>(GetOwningPlayerPawn()->GetComponentByClass(UPlayerInventoryComponent::StaticClass()));
+	Super::NativeConstruct();
 	RefreshAllSlots();
 }
