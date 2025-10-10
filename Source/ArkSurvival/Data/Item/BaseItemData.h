@@ -36,6 +36,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "무게"))
 	float Weight;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "설명"))
+	FText Description;
+
 	FBaseItemData()
 	{
 		ItemName = TEXT("");
@@ -43,5 +46,6 @@ public:
 		ItemCategory = 0;
 		MaxStackSize = 0;
 		Weight = 0.f;
+		Description = FText::GetEmpty();
 	}
 };

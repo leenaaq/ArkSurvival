@@ -44,23 +44,27 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void CloseAllUI();
 
+	UFUNCTION(BlueprintCallable)
+	void RegisterUI(const FString& UIName, TSubclassOf<UBaseWidget> WidgetClass, EUIGroup Group, EUICachePolicy CachePolicy);
+
 private:
 	UPROPERTY()
-	TMap<FString, UBaseWidget*> CachedWidgets;
+	TMap<FString, UBaseWidget*> CachedWidgets = {};
 
 	UPROPERTY()
-	TArray<FString> ActiveUIStack;
+	TArray<FString> ActiveUIStack = {};
 
 	UPROPERTY(EditAnywhere)
-	TMap<FString, EUIGroup> UIGroups;
+	TMap<FString, EUIGroup> UIGroups = {};
 
 	UPROPERTY(EditAnywhere)
-	TMap<FString, EUICachePolicy> UICachePolicies;
+	TMap<FString, EUICachePolicy> UICachePolicies = {};
 
 	UPROPERTY(EditAnywhere)
-	TMap<FString, TSubclassOf<UBaseWidget>> UIClasses;
+	TMap<FString, TSubclassOf<UBaseWidget>> UIClasses = {};
 
-	void CloseUIsByGroup(EUIGroup Group);
 	UBaseWidget* GetOrCreateWidget(const FString& UIName);
+	
+	void CloseUIsByGroup(EUIGroup Group);
 	void CleanupTemporaryWidgets();
 };

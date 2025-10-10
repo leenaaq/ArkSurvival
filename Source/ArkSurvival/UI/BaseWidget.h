@@ -14,9 +14,9 @@ public:
 	
 	virtual void NativeConstruct() override;
 	
-	void ShowWidget();
+	virtual void ShowWidget();
 	
-	void HideWidget();
+	virtual void HideWidget();
 	
 	void ToggleWidget();
 	

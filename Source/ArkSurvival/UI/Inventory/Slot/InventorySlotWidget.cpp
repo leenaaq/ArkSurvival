@@ -1,4 +1,6 @@
 #include "InventorySlotWidget.h"
+
+#include "ArkSurvival/UI/Inventory/Tooltip/BaseTooltipWidget.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Components/Button.h"
@@ -12,9 +14,15 @@ void UInventorySlotWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
     
-	if (SlotButton && !SlotButton->OnClicked.IsAlreadyBound(this, &UInventorySlotWidget::OnSlotClicked))
+	if (SlotButton)
 	{
-		SlotButton->OnClicked.AddDynamic(this, &UInventorySlotWidget::OnSlotClicked);
+		if (!SlotButton->OnClicked.IsAlreadyBound(this, &UInventorySlotWidget::OnSlotClicked))
+		{
+			SlotButton->OnClicked.AddDynamic(this, &UInventorySlotWidget::OnSlotClicked);
+		}
+		
+		SlotButton->OnHovered.AddDynamic(this, &UInventorySlotWidget::OnSlotHovered);
+		SlotButton->OnUnhovered.AddDynamic(this, &UInventorySlotWidget::OnSlotUnhovered);
 	}
     
 	ClearSlot();
@@ -49,8 +57,23 @@ void UInventorySlotWidget::UpdateVisuals()
 	{
 		if (ItemIcon)
 		{
-			// TODO 아이콘 로드 및 표시
-			ItemIcon->SetVisibility(ESlateVisibility::Visible);
+			if (SlotData.ItemData.Icon.IsValid())
+			{
+				UTexture2D* LoadedIcon = SlotData.ItemData.Icon.Get();
+				if (LoadedIcon)
+				{
+					ItemIcon->SetBrushFromTexture(LoadedIcon);
+					ItemIcon->SetVisibility(ESlateVisibility::Visible);
+				}
+				else
+				{
+					ItemIcon->SetVisibility(ESlateVisibility::Hidden);
+				}
+			}
+			else
+			{
+				ItemIcon->SetVisibility(ESlateVisibility::Hidden);
+			}
 		}
         
 		if (StackCountText)
@@ -77,5 +100,33 @@ void UInventorySlotWidget::UpdateVisuals()
 		{
 			StackCountText->SetVisibility(ESlateVisibility::Hidden);
 		}
+	}
+}
+
+void UInventorySlotWidget::OnSlotHovered()
+{
+	if (SlotData.StackCount > 0 && TooltipWidgetClass)
+	{
+		if (!ItemTooltipWidget)
+		{
+			ItemTooltipWidget = CreateWidget<UBaseTooltipWidget>(GetWorld(), TooltipWidgetClass);
+			if (ItemTooltipWidget)
+			{
+				ItemTooltipWidget->AddToViewport(999);
+			}
+		}
+
+		if (ItemTooltipWidget)
+		{
+			ItemTooltipWidget->SetTooltipData(SlotData);
+		}
+	}
+}
+
+void UInventorySlotWidget::OnSlotUnhovered()
+{
+	if (ItemTooltipWidget)
+	{
+		ItemTooltipWidget->HideWidget();
 	}
 }

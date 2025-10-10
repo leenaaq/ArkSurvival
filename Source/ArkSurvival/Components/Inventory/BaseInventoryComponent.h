@@ -76,7 +76,7 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing=OnRep_Slots)
-    TArray<FInventorySlot> Slots;
+    TArray<FInventorySlot> Slots = {};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 MaxSlots = 30;

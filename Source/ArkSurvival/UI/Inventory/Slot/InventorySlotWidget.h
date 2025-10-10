@@ -8,6 +8,8 @@
 #include "ArkSurvival/Components/Inventory/BaseInventoryComponent.h"
 #include "InventorySlotWidget.generated.h"
 
+class UBaseTooltipWidget;
+
 UCLASS()
 class ARKSURVIVAL_API UInventorySlotWidget : public UBaseWidget
 {
@@ -20,19 +22,25 @@ protected:
 	virtual void NativeConstruct() override;
 
 	UPROPERTY(meta = (BindWidget))
-	UButton* SlotButton;
+	UButton* SlotButton = nullptr;
 
 	UPROPERTY(meta = (BindWidget))
-	UImage* ItemIcon;
+	UImage* ItemIcon = nullptr;
 
 	UPROPERTY(meta = (BindWidget))
-	UTextBlock* StackCountText;
+	UTextBlock* StackCountText = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)
 	int32 SlotIndex = -1;
 
 	UPROPERTY(BlueprintReadOnly)
-	FInventorySlot SlotData;
+	FInventorySlot SlotData = FInventorySlot();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tooltip")
+	TSubclassOf<UBaseTooltipWidget> TooltipWidgetClass = nullptr;
+
+	UPROPERTY()
+	UBaseTooltipWidget* ItemTooltipWidget = nullptr;
 
 public:
 	UFUNCTION(BlueprintCallable)
@@ -49,4 +57,10 @@ protected:
 	void OnSlotClicked();
 
 	void UpdateVisuals();
+
+	UFUNCTION()
+	void OnSlotHovered();
+
+	UFUNCTION()
+	void OnSlotUnhovered();
 };

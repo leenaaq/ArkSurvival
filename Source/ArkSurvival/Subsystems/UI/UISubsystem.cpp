@@ -6,17 +6,6 @@
 void UUISubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
-    
-    UIClasses.Add("PlayerInventory", LoadClass<UBaseWidget>(nullptr, TEXT("/Game/_UI/Inventory/PlayerInventory/WBP_PlayerInventoryWidget.WBP_PlayerInventoryWidget_C")));
-    
-    UIGroups.Add("PlayerInventory", EUIGroup::Inventory);
-    UIGroups.Add("CraftingMenu", EUIGroup::Inventory);
-    UIGroups.Add("Settings", EUIGroup::FullScreen);
-    UIGroups.Add("MainMenu", EUIGroup::FullScreen);
-    
-    UICachePolicies.Add("PlayerInventory", EUICachePolicy::AlwaysCache);
-    UICachePolicies.Add("Settings", EUICachePolicy::CacheTemporary);
-    UICachePolicies.Add("MainMenu", EUICachePolicy::NeverCache);
 }
 
 void UUISubsystem::Deinitialize()
@@ -117,7 +106,7 @@ UBaseWidget* UUISubsystem::GetOrCreateWidget(const FString& UIName)
         if (World && World->GetFirstPlayerController())
         {
             UBaseWidget* NewWidget = CreateWidget<UBaseWidget>(
-                World->GetFirstPlayerController(), 
+            GetWorld()->GetGameInstance(),
                 UIClasses[UIName]
             );
             
@@ -142,4 +131,11 @@ UBaseWidget* UUISubsystem::GetOrCreateWidget(const FString& UIName)
 void UUISubsystem::CleanupTemporaryWidgets()
 {
     // TODO 임시 캐시 위젯들의 시간 체크해서 정리
+}
+
+void UUISubsystem::RegisterUI(const FString& UIName, TSubclassOf<UBaseWidget> WidgetClass, EUIGroup Group, EUICachePolicy CachePolicy)
+{
+    UIClasses.Add(UIName, WidgetClass);
+    UIGroups.Add(UIName, Group);
+    UICachePolicies.Add(UIName, CachePolicy);
 }

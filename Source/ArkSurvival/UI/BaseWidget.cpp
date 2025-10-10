@@ -18,7 +18,7 @@ void UBaseWidget::ShowWidget()
 
 void UBaseWidget::HideWidget()
 {
-	SetVisibility(ESlateVisibility::Hidden);
+	SetVisibility(ESlateVisibility::Collapsed);
 	SetIsVisible(false);
 }
 
