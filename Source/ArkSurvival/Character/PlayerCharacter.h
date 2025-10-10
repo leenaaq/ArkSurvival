@@ -81,4 +81,9 @@ private:
 	AActor* CharacterPreviewActor = nullptr;
 #pragma endregion
 
+#pragma region Inventory
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UPlayerInventoryWidget> InventoryWidgetClass = nullptr;
+#pragma endregion
+
 };

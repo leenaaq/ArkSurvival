@@ -1,5 +1,6 @@
 #include "ItemDataSubsystem.h"
 
+#include "ArkSurvival/Core/Settings/ItemSystemSettings.h"
 #include "ArkSurvival/Data/Item/ConsumeItemData.h"
 #include "ArkSurvival/Data/Item/EquipmentItemData.h"
 
@@ -7,8 +8,10 @@ void UItemDataSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 
-	ConsumableDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/_Data/Item/DT_ConsumeItemData.DT_ConsumeItemData"));
-	EquipmentDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/_Data/Item/DT_EquipmentItemData.DT_EquipmentItemData"));
+	const UItemSystemSettings* Settings = UItemSystemSettings::Get();
+    
+	ConsumableDataTable = Settings->ConsumableDataTable.LoadSynchronous();
+	EquipmentDataTable = Settings->EquipmentDataTable.LoadSynchronous();
 
 	LoadAllItemTables();
 }

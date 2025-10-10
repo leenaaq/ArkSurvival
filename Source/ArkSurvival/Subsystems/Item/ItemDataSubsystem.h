@@ -15,24 +15,20 @@ class ARKSURVIVAL_API UItemDataSubsystem : public UGameInstanceSubsystem
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
-	// 소비템 DataTable
-	UPROPERTY()
-	UDataTable* ConsumableDataTable;
-
-	// 장비 DataTable
-	UPROPERTY()
-	UDataTable* EquipmentDataTable;
-
-	// 소비템 맵
-	UPROPERTY()
-	TMap<int32, FConsumeItemData> ConsumableDataMap;
-
-	// 장비 맵
-	UPROPERTY()
-	TMap<int32, FEquipmentItemData> EquipmentDataMap;
-
 	void LoadAllItemTables();
 
 	FConsumeItemData GetConsumableData(int32 ItemID) const;
 	FEquipmentItemData GetEquipmentData(int32 ItemID) const;
+	
+	UPROPERTY()
+	UDataTable* ConsumableDataTable = nullptr;
+	
+	UPROPERTY()
+	UDataTable* EquipmentDataTable = nullptr;
+	
+	UPROPERTY()
+	TMap<int32, FConsumeItemData> ConsumableDataMap = {};
+	
+	UPROPERTY()
+	TMap<int32, FEquipmentItemData> EquipmentDataMap = {};
 };

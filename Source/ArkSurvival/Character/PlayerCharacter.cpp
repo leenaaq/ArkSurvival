@@ -30,6 +30,15 @@ void APlayerCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	if (InventoryWidgetClass)
+	{
+		UUISubsystem* UISubsystem = GetGameInstance()->GetSubsystem<UUISubsystem>();
+		if (UISubsystem)
+		{
+			UISubsystem->RegisterUI("PlayerInventory", InventoryWidgetClass, EUIGroup::Inventory, EUICachePolicy::AlwaysCache);
+		}
+	}
 }
 
 #pragma region Input
